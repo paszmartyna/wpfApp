@@ -13,10 +13,11 @@
     </Window.Resources>
     <Grid
         Margin="15">
-        
+
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition ></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
@@ -82,6 +83,16 @@
                                     Header="Gross Value" 
                                     Width="*" 
                                     IsReadOnly="True" />
+                <DataGridTemplateColumn Header="Delete">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="deleteOrderDetail" 
+                                    Content="Delete" 
+                                    Click="DeleteOrderDetail_Button_Click">
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Save" HorizontalAlignment="Center" 

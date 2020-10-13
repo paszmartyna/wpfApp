@@ -48,7 +48,7 @@ namespace WpfApplication
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
+
             _context.SaveChanges();
 
             ordersDataGrid.Items.Refresh();
@@ -64,11 +64,27 @@ namespace WpfApplication
         private void Delete_Button_Click(object sender, RoutedEventArgs e)
         {
             var selectedOrderId = (ordersDataGrid.SelectedItem as Order).Id;
-            Order order = _context.Orders.FirstOrDefault(order => order.Id == selectedOrderId);
+            Order order = _context.Orders
+                               .SingleOrDefault(order => order.Id == selectedOrderId);
 
             if (order != null)
             {
                 _context.Orders.Remove(order);
+            }
+            _context.SaveChanges();
+            ordersDataGrid.Items.Refresh();
+            orderDetailsDataGrid.Items.Refresh();
+        }
+
+        private void DeleteOrderDetail_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedOrderDetailId = (orderDetailsDataGrid.SelectedItem as OrderDetail).Id;
+            OrderDetail orderDetail = _context.OrderDetails
+                                        .SingleOrDefault(orderDetail => orderDetail.Id == selectedOrderDetailId);
+
+            if (orderDetail != null)
+            {
+                _context.OrderDetails.Remove(orderDetail);
             }
             _context.SaveChanges();
             ordersDataGrid.Items.Refresh();
