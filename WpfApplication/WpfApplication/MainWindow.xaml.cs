@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,6 +59,20 @@ namespace WpfApplication
         {
             _context.Dispose();
             base.OnClosing(e);
+        }
+
+        private void Delete_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedOrderId = (ordersDataGrid.SelectedItem as Order).Id;
+            Order order = _context.Orders.FirstOrDefault(order => order.Id == selectedOrderId);
+
+            if (order != null)
+            {
+                _context.Orders.Remove(order);
+            }
+            _context.SaveChanges();
+            ordersDataGrid.Items.Refresh();
+            orderDetailsDataGrid.Items.Refresh();
         }
     }
 }
