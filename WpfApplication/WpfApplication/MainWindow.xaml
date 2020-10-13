@@ -1,0 +1,61 @@
+﻿<Window x:Class="WpfApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApplication"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="ordersViewSource"/>
+        <CollectionViewSource x:Key="orderDetailsViewSource" 
+                              Source="{Binding OrderDetails, Source={StaticResource ordersViewSource}}"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="ordersDataGrid" AutoGenerateColumns="False" 
+          EnableRowVirtualization="True" 
+          ItemsSource="{Binding Source={StaticResource ordersViewSource}}" 
+          Margin="13,13,43,282" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}"
+                            Header="Order Id" Width="SizeToHeader"
+                            IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding OrderName}" Header="Order Name" 
+                          Width="SizeToHeader" />
+                <DataGridTextColumn Binding="{Binding ClientId}" Header="Client Id" 
+                         Width="SizeToHeader" />
+                <DataGridTextColumn Binding="{Binding OrderDate}" Header="Order Date" 
+                            Width="*"/>
+                <DataGridTextColumn Binding="{Binding NetValue}" Header="Net Value" 
+                            Width="*"/>
+                <DataGridTextColumn Binding="{Binding GrossValue}" Header="Net Value" 
+                            Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+            <DataGrid x:Name="orderDetailsDataGrid" AutoGenerateColumns="False" 
+          EnableRowVirtualization="True" 
+          ItemsSource="{Binding Source={StaticResource orderDetailsViewSource}}" 
+          Margin="13,251,43,83" RowDetailsVisibilityMode="VisibleWhenSelected" 
+          RenderTransformOrigin="0.488,0.251" Grid.ColumnSpan="2">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Id}" Header="Id" 
+                            Width="SizeToHeader" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Quantity}" 
+                            Header="Quantity" Width="SizeToHeader"
+                            />
+                    <DataGridTextColumn Binding="{Binding ItemId}" Header="Item Id" 
+                            Width="SizeToHeader" />
+                <DataGridTextColumn Binding="{Binding Item.ItemName}" Header="Item Name" 
+                            Width="SizeToHeader" IsReadOnly="True" />
+            </DataGrid.Columns>
+            </DataGrid>
+            <Button Content="Save" HorizontalAlignment="Left" Margin="333,383,0,31" 
+        Click="Button_Click" Height="20" Width="124"/>
+        </Grid>
+
+
+</Window>
