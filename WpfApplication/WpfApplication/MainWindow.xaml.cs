@@ -1,9 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,6 +28,16 @@ namespace WpfApplication
     /// </summary>
     public partial class MainWindow : Window
     {
+        HttpClient githubHttpClient = new HttpClient()
+        {
+            BaseAddress =new Uri( "https://api.github.com/")
+           
+        };
+
+       
+
+
+
         private readonly AppDbContext _context =
            new AppDbContext();
 
@@ -34,6 +48,8 @@ namespace WpfApplication
             InitializeComponent();
             ordersViewSource =
                 (CollectionViewSource)FindResource(nameof(ordersViewSource));
+            githubHttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            githubHttpClient.DefaultRequestHeaders.Add("User-Agent", "C# App");
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -44,6 +60,7 @@ namespace WpfApplication
 
             ordersViewSource.Source =
                 _context.Orders.Local.ToObservableCollection();
+            ShowInfo();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -89,6 +106,14 @@ namespace WpfApplication
             _context.SaveChanges();
             ordersDataGrid.Items.Refresh();
             orderDetailsDataGrid.Items.Refresh();
+        }
+
+        private async void ShowInfo()
+        {
+            var jsonString=await githubHttpClient.GetStringAsync("repos/paszmartyna/wpfApp");
+
+            var repoDetails=JsonConvert.DeserializeObject<RepoDetail>(jsonString);
+
         }
     }
 }
