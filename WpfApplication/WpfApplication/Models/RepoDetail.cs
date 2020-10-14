@@ -4,11 +4,20 @@ using System.Text;
 
 namespace WpfApplication.Models
 {
-    public class RepoDetail
+    class RepoDetail
     {
-        public string Name { get;  }
-        public string UserName { get;  }
-        public DateTime CreationDate { get; }
-        public int Watchers { get; }
+        public string Name { get; set; }
+        public Owner Owner { get; set; }
+        public string Description { get; set; }
+        public int Watchers_count { get; set; }
+
+        public DateTime Updated_at { get; set; }
+    }
+
+    class Owner
+    {
+        public string Login { get; set; }
+        public string Url { get; set; }
+        public string Type { get; set; }
     }
 }

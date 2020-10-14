@@ -5,11 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApplication"
         mc:Ignorable="d"
-        Title="Application" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="Application" Height="550" Width="800" Loaded="Window_Loaded">
     <Window.Resources>
         <CollectionViewSource x:Key="ordersViewSource"/>
         <CollectionViewSource x:Key="orderDetailsViewSource" 
                               Source="{Binding OrderDetails, Source={StaticResource ordersViewSource}}"/>
+        <Style x:Key="myLabelStyle" TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontStyle" Value="Italic" />
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="repoDetailTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
     </Window.Resources>
     <Grid
         Margin="15">
@@ -97,6 +109,39 @@
         </DataGrid>
         <Button Content="Save" HorizontalAlignment="Center" Margin="3"
         Click="Button_Click" Height="20" Width="120" Grid.Row="2" FontWeight="Bold" Background="#FF11A62C"/>
+        <StackPanel  Grid.Row="3">
+            <StackPanel.Resources>
+                <Style BasedOn="{StaticResource myLabelStyle}" TargetType="{x:Type Label}" ></Style>
+                <Style BasedOn="{StaticResource repoDetailTextBox}" TargetType="{x:Type TextBox}" ></Style>
+            </StackPanel.Resources>
+            <Label  Content="Repository details:"
+                    Margin="2,0,2,0"
+                    FontSize="14"
+                    FontStyle="Normal" FontWeight="Bold"  
+                     
+                    />
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Label >Repository name:</Label>
+                <TextBox Name="RepoNameTextBox"></TextBox>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <Label>Description:</Label>
+                <TextBox  Name="UpdatedAtTextBox"></TextBox>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Orientation="Horizontal">
+                <Label>Watchers number:</Label>
+                <TextBox  Name="WatchersTextBox"></TextBox>
+            </StackPanel>
+            <StackPanel Grid.Row="4" Orientation="Horizontal">
+                <Label>Owner Name:</Label>
+                <TextBox  Name="OwnerNameTextBox"></TextBox>
+            </StackPanel>
+            <StackPanel Grid.Row="5" Orientation="Horizontal">
+                <Label>Owner type:</Label>
+                <TextBox  Name="OwnerTypeTextBox"></TextBox>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 
 

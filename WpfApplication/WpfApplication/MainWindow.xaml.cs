@@ -41,12 +41,18 @@ namespace WpfApplication
             SetGithubHttpClient();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _context.Database.EnsureCreated();
             _context.Orders.Load();
             ordersViewSource.Source = _context.Orders.Local.ToObservableCollection();
-            ShowInfo();
+            Task<RepoDetail> repoDetailTask = GetRepoDetails();
+            RepoDetail repoDetail = await repoDetailTask;
+            RepoNameTextBox.Text = repoDetail.Name;
+            UpdatedAtTextBox.Text = repoDetail.Updated_at.ToString();
+            WatchersTextBox.Text = repoDetail.Watchers_count.ToString();
+            OwnerNameTextBox.Text = repoDetail.Owner.Login;
+            OwnerTypeTextBox.Text = repoDetail.Owner.Type;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -105,10 +111,12 @@ namespace WpfApplication
             githubHttpClient.DefaultRequestHeaders.Add("User-Agent", "C# App");
         }
 
-        private async void ShowInfo()
+        private async Task<RepoDetail> GetRepoDetails()
         {
             var jsonString = await githubHttpClient.GetStringAsync("repos/paszmartyna/wpfApp");
-            var repoDetails = JsonConvert.DeserializeObject<RepoDetail>(jsonString);
+            var reposDetails = JsonConvert.DeserializeObject<RepoDetail>(jsonString);
+
+            return reposDetails;
         }
     }
 }
