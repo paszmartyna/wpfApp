@@ -28,38 +28,24 @@ namespace WpfApplication
     /// </summary>
     public partial class MainWindow : Window
     {
-        HttpClient githubHttpClient = new HttpClient()
-        {
-            BaseAddress =new Uri( "https://api.github.com/")
-           
-        };
+        private HttpClient githubHttpClient;
 
-       
-
-
-
-        private readonly AppDbContext _context =
-           new AppDbContext();
+        private readonly AppDbContext _context = new AppDbContext();
 
         private CollectionViewSource ordersViewSource;
 
         public MainWindow()
         {
             InitializeComponent();
-            ordersViewSource =
-                (CollectionViewSource)FindResource(nameof(ordersViewSource));
-            githubHttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            githubHttpClient.DefaultRequestHeaders.Add("User-Agent", "C# App");
+            ordersViewSource = (CollectionViewSource)FindResource(nameof(ordersViewSource));
+            SetGithubHttpClient();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _context.Database.EnsureCreated();
-
             _context.Orders.Load();
-
-            ordersViewSource.Source =
-                _context.Orders.Local.ToObservableCollection();
+            ordersViewSource.Source = _context.Orders.Local.ToObservableCollection();
             ShowInfo();
         }
 
@@ -67,7 +53,6 @@ namespace WpfApplication
         {
 
             _context.SaveChanges();
-
             ordersDataGrid.Items.Refresh();
             orderDetailsDataGrid.Items.Refresh();
         }
@@ -75,6 +60,7 @@ namespace WpfApplication
         protected override void OnClosing(CancelEventArgs e)
         {
             _context.Dispose();
+            githubHttpClient.Dispose();
             base.OnClosing(e);
         }
 
@@ -108,12 +94,21 @@ namespace WpfApplication
             orderDetailsDataGrid.Items.Refresh();
         }
 
+        private void SetGithubHttpClient()
+        {
+            githubHttpClient = new HttpClient()
+            {
+                BaseAddress = new Uri("https://api.github.com/")
+            };
+
+            githubHttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            githubHttpClient.DefaultRequestHeaders.Add("User-Agent", "C# App");
+        }
+
         private async void ShowInfo()
         {
-            var jsonString=await githubHttpClient.GetStringAsync("repos/paszmartyna/wpfApp");
-
-            var repoDetails=JsonConvert.DeserializeObject<RepoDetail>(jsonString);
-
+            var jsonString = await githubHttpClient.GetStringAsync("repos/paszmartyna/wpfApp");
+            var repoDetails = JsonConvert.DeserializeObject<RepoDetail>(jsonString);
         }
     }
 }

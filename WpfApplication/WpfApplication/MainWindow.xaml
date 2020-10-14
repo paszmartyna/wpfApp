@@ -16,8 +16,8 @@
 
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition ></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
@@ -95,8 +95,8 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Save" HorizontalAlignment="Center" 
-        Click="Button_Click" Height="20" Width="124" Grid.Row="2"/>
+        <Button Content="Save" HorizontalAlignment="Center" Margin="3"
+        Click="Button_Click" Height="20" Width="120" Grid.Row="2" FontWeight="Bold" Background="#FF11A62C"/>
     </Grid>
 
 
