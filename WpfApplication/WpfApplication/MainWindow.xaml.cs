@@ -48,11 +48,7 @@ namespace WpfApplication
             ordersViewSource.Source = _context.Orders.Local.ToObservableCollection();
             Task<RepoDetail> repoDetailTask = GetRepoDetails();
             RepoDetail repoDetail = await repoDetailTask;
-            RepoNameTextBox.Text = repoDetail.Name;
-            UpdatedAtTextBox.Text = repoDetail.Updated_at.ToString();
-            WatchersTextBox.Text = repoDetail.Watchers_count.ToString();
-            OwnerNameTextBox.Text = repoDetail.Owner.Login;
-            OwnerTypeTextBox.Text = repoDetail.Owner.Type;
+            SetRepoDetailPanel(repoDetail);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -117,6 +113,15 @@ namespace WpfApplication
             var reposDetails = JsonConvert.DeserializeObject<RepoDetail>(jsonString);
 
             return reposDetails;
+        }
+
+        private void SetRepoDetailPanel(RepoDetail repoDetail)
+        {
+            RepoNameTextBox.Text = repoDetail.Name;
+            UpdatedAtTextBox.Text = repoDetail.Updated_at.ToString();
+            WatchersTextBox.Text = repoDetail.Watchers_count.ToString();
+            OwnerNameTextBox.Text = repoDetail.Owner.Login;
+            OwnerTypeTextBox.Text = repoDetail.Owner.Type;
         }
     }
 }

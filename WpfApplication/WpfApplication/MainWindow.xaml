@@ -45,7 +45,7 @@
                           Width="SizeToHeader" />
                 <DataGridTextColumn Binding="{Binding ClientId}" Header="Client Id" 
                          Width="SizeToHeader" />
-                <DataGridTextColumn Binding="{Binding OrderDate}" Header="Order Date" 
+                <DataGridTextColumn Binding="{Binding OrderDate ,StringFormat=\{0:dd-MM-yy\}}" Header="Order Date" 
                             Width="*"/>
                 <DataGridTextColumn Binding="{Binding NetValue, StringFormat=C}" Header="Net Value" 
                             Width="*"/>
@@ -126,7 +126,7 @@
                 <TextBox Name="RepoNameTextBox"></TextBox>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <Label>Description:</Label>
+                <Label>Updated at:</Label>
                 <TextBox  Name="UpdatedAtTextBox"></TextBox>
             </StackPanel>
             <StackPanel Grid.Row="3" Orientation="Horizontal">
