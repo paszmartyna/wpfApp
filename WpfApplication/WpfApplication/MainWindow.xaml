@@ -25,6 +25,10 @@
     </Window.Resources>
     <Grid
         Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="326*"/>
+            <ColumnDefinition Width="59*"/>
+        </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -66,8 +70,7 @@
           EnableRowVirtualization="True" 
           ItemsSource="{Binding Source={StaticResource orderDetailsViewSource}}" 
           RowDetailsVisibilityMode="VisibleWhenSelected" 
-          RenderTransformOrigin="0.488,0.251" Grid.ColumnSpan="2"
-                 Grid.Row="1"   >
+          RenderTransformOrigin="0.488,0.251" Grid.ColumnSpan="2" Margin="0,159,0,26" Grid.RowSpan="3"   >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" 
                                     Header="Id" 
@@ -107,9 +110,9 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Save" HorizontalAlignment="Center" Margin="3"
+        <Button Content="Save" HorizontalAlignment="Left" Margin="325,3,0,3"
         Click="Button_Click" Height="20" Width="120" Grid.Row="2" FontWeight="Bold" Background="#FF11A62C"/>
-        <StackPanel  Grid.Row="3">
+        <StackPanel  Grid.Row="3" Grid.ColumnSpan="2">
             <StackPanel.Resources>
                 <Style BasedOn="{StaticResource myLabelStyle}" TargetType="{x:Type Label}" ></Style>
                 <Style BasedOn="{StaticResource repoDetailTextBox}" TargetType="{x:Type TextBox}" ></Style>
